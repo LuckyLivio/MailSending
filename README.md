@@ -23,6 +23,7 @@ MailSending/
 ├── .gitignore           # 忽略文件（已包含 .env）
 └── README.md            # 项目说明
 ```
+
 ---
 
 ## ⚙️ 环境准备
@@ -31,68 +32,71 @@ MailSending/
    ```bash
    git clone https://github.com/LuckyLivio/MailSending.git
    cd MailSending
+   ```
 
-	2.	安装依赖：
+2. 安装依赖：
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-pip install -r requirements.txt
+3. 在根目录下新建 `.env` 文件，写入邮箱配置：
+   ```env
+   # SMTP 配置
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=465
+   SMTP_USER=yourname@gmail.com
+   SMTP_PASS=abcdefghijklmnop   # Gmail App Password 或 QQ 授权码
 
+   # 收件人（默认发给自己）
+   TO_EMAIL=receiver@example.com
 
-	3.	在根目录下新建 .env 文件，写入邮箱配置：
+   # 发送控制
+   SEND_COUNT=5
+   DELAY_SEC=2
+   ```
 
-# SMTP 配置
-SMTP_HOST=smtp.gmail.com
-SMTP_PORT=465
-SMTP_USER=yourname@gmail.com
-SMTP_PASS=abcdefghijklmnop   # Gmail App Password 或 QQ 授权码
+---
 
-# 收件人（默认发给自己）
-TO_EMAIL=receiver@example.com
+## 🔑 如何获取 Gmail 应用专用密码
+1. 打开 Google 账号安全设置
+2. 启用 两步验证 (2FA)
+3. 在 “应用专用密码” 中新建一个 Mail 类型的密码
+4. 获得 16 位密码（例如 abcd efgh ijkl mnop），去掉空格填入 `.env` 的 `SMTP_PASS`
 
-# 发送控制
-SEND_COUNT=5
-DELAY_SEC=2
+---
 
-
-
-⸻
-
-🔑 如何获取 Gmail 应用专用密码
-	1.	打开 Google 账号安全设置
-	2.	启用 两步验证 (2FA)
-	3.	在 “应用专用密码” 中新建一个 Mail 类型的密码
-	4.	获得 16 位密码（例如 abcd efgh ijkl mnop），去掉空格填入 .env 的 SMTP_PASS
-
-⸻
-
-📤 使用方法
+## 📤 使用方法
 
 运行脚本：
-
+```bash
 python smtp_sender.py
+```
 
 示例输出：
-
+```
 准备发送到 receiver@example.com，次数 5，间隔 2.0s
 [1/5] 已成功发送
 [2/5] 已成功发送
 ...
-
-
-⸻
-
-📌 注意事项
-	•	切勿滥用：本工具仅用于 学习 / 自测网页收件功能，不要用于垃圾邮件。
-	•	使用 Gmail 时必须用 App Password；使用 QQ 邮箱请在设置中开启 SMTP/IMAP 并生成 授权码。
-	•	如果遇到 (535, 'Username and Password not accepted')，说明密码有问题 → 请检查是否正确使用了 App Password / 授权码。
-
-⸻
-
-📜 License
-
-本项目采用 MIT License。
-
-⸻
-
-👨‍💻 Author: LuckyLivio
+[5/5] 已成功发送
+所有邮件发送完成！
+```
 
 ---
+
+## 📌 注意事项
+- 切勿滥用：本工具仅用于 **学习 / 自测网页收件功能**，不要用于垃圾邮件发送，违规使用需自行承担法律责任。
+- 邮箱权限配置：
+  - 使用 Gmail 时，必须使用 **App Password**（普通账号密码无法登录 SMTP）
+  - 使用 QQ 邮箱时，需先在账号设置中开启「SMTP/IMAP 服务」，再生成专属 **授权码**
+- 常见错误排查：若出现 `(535, 'Username and Password not accepted')` 错误，大概率是密码/授权码错误，需重新检查 `.env` 中的 `SMTP_PASS` 是否为正确的 App Password 或授权码。
+
+---
+
+## 📜 License
+
+本项目采用 **MIT License** 开源，允许个人及商业场景下的修改与使用（需保留原作者声明）。
+
+---
+
+## 👨‍💻 Author: LuckyLivio
